@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IGCSE ICT - Networks & Common Devices Quiz (20 MCQs)</title>
+    <style>
+        :root {
+            --bg-main: #090d16;
+            --bg-card: #131d31;
+            --border-color: #223354;
+            --accent: #38bdf8;
+            --accent-hover: #0ea5e9;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        header {
+            background-color: var(--bg-card);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1.5rem 1rem;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        header h1 {
+            color: var(--accent);
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 0.35rem;
+        }
+
+        header p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        main {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 1rem;
+            max-width: 800px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .quiz-status {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.25rem;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .score-pill {
+            background-color: #0c4a6e;
+            color: #7dd3fc;
+            padding: 0.35rem 1rem;
+            border-radius: 9999px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border: 1px solid #0284c7;
+        }
+
+        .card {
+            width: 100%;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 1.25rem;
+            padding: 2rem;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .question-text {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #f1f5f9;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.85rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .option-btn {
+            width: 100%;
+            text-align: left;
+            background-color: #1e293b;
+            color: var(--text-main);
+            padding: 1rem 1.25rem;
+            border-radius: 0.85rem;
+            border: 1px solid #334155;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .option-btn:hover:not(:disabled) {
+            background-color: #283548;
+            border-color: var(--accent);
+            transform: translateY(-1px);
+        }
+
+        .option-btn:disabled {
+            cursor: not-allowed;
+        }
+
+        .option-btn.correct {
+            background-color: #064e3b !important;
+            border-color: #059669 !important;
+            color: #ecfdf5 !important;
+        }
+
+        .option-btn.incorrect {
+            background-color: #7f1d1d !important;
+            border-color: #dc2626 !important;
+            color: #fee2e2 !important;
+        }
+
+        .feedback-box {
+            padding: 1.15rem;
+            border-radius: 0.85rem;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .feedback-box.correct-feedback {
+            background-color: #022c22;
+            border: 1px solid #047857;
+            color: #a7f3d0;
+        }
+
+        .feedback-box.incorrect-feedback {
+            background-color: #450a0a;
+            border: 1px solid #b91c1c;
+            color: #fecdd3;
+        }
+
+        .btn-primary {
+            background-color: var(--accent);
+            color: #0f172a;
+            font-weight: 700;
+            padding: 0.85rem 1.75rem;
+            border-radius: 0.85rem;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-hover);
+            transform: translateY(-1px);
+        }
+
+        .results-card {
+            text-align: center;
+            padding: 3rem 2rem;
+        }
+
+        .results-card h2 {
+            font-size: 2.25rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .results-card p {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        footer {
+            background-color: var(--bg-card);
+            border-top: 1px solid var(--border-color);
+            padding: 1rem;
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>IGCSE ICT Practice Quiz</h1>
+        <p>Topics 4.1 Networks & 4.1.1 Common Network Devices and Terms</p>
+    </header>
+
+    <main>
+        <div class="quiz-status">
+            <span id="question-counter">Question 1 of 20</span>
+            <span id="score-display" class="score-pill">Score: 0</span>
+        </div>
+
+        <!-- Quiz Container -->
+        <div id="quiz-container" class="card">
+            <div id="question-box" class="question-text">
+                Loading question...
+            </div>
+
+            <div id="options-container" class="options-list">
+                <!-- Options populated dynamically -->
+            </div>
+
+            <div id="feedback-box" class="feedback-box hidden">
+                <!-- Feedback populated dynamically -->
+            </div>
+
+            <div style="display: flex; justify-content: flex-end;">
+                <button id="next-btn" onclick="nextQuestion()" class="btn-primary hidden">Next Question</button>
+            </div>
+        </div>
+
+        <!-- Results Container -->
+        <div id="results-container" class="card results-card hidden">
+            <h2>Quiz Completed! 🎉</h2>
+            <p id="final-score">You scored X out of 20</p>
+            <button onclick="restartQuiz()" class="btn-primary">Restart Quiz</button>
+        </div>
+    </main>
+
+    <footer>
+        IGCSE ICT Revision &bull; Networks & Devices
+    </footer>
+
+    <script>
+        const questions = [
+            {
+                question: "What is a computer network?",
+                options: [
+                    { text: "Two or more computers connected together to share resources, data, and hardware peripherals", isCorrect: true, rationale: "A network connects computers and devices to share files, printers, and internet connections." },
+                    { text: "A single standalone computer with an internal hard disk drive", isCorrect: false, rationale: "A standalone computer is not connected to a network." },
+                    { text: "A software application used for writing text documents", isCorrect: false, rationale: "This describes a word processor." },
+                    { text: "A physical storage tray for optical CDs and DVDs", isCorrect: false, rationale: "This is incorrect." }
+                ]
+            },
+            {
+                question: "What does LAN stand for in computer networking?",
+                options: [
+                    { text: "Local Area Network", isCorrect: true, rationale: "LAN stands for Local Area Network, covering a small geographical area like a single room, school, or office building." },
+                    { text: "Large Area Node", isCorrect: false, rationale: "This is incorrect terminology." },
+                    { text: "Logical Access Number", isCorrect: false, rationale: "This is incorrect." },
+                    { text: "Linear Audio Network", isCorrect: false, rationale: "This is incorrect." }
+                ]
+            },
+            {
+                question: "What does WAN stand for in computer networking?",
+                options: [
+                    { text: "Wide Area Network", isCorrect: true, rationale: "WAN stands for Wide Area Network, connecting computers across large geographical areas like countries or the entire globe (e.g., the Internet)." },
+                    { text: "Wireless Access Node", isCorrect: false, rationale: "This is incorrect." },
+                    { text: "Web Application Network", isCorrect: false, rationale: "This is incorrect." },
+                    { text: "Wired Architecture Number", isCorrect: false, rationale: "This is incorrect." }
+                ]
+            },
+            {
+                question: "What is the primary function of a router in a computer network?",
+                options: [
+                    { text: "To forward data packets between different computer networks (such as connecting a home LAN to the Internet WAN)", isCorrect: true, rationale: "Routers direct data traffic between distinct networks by finding the most efficient path for packets." },
+                    { text: "To print paper documents using liquid ink", isCorrect: false, rationale: "Printing is handled by printers." },
+                    { text: "To store permanent backup files on magnetic tapes", isCorrect: false, rationale: "This describes tape archiving." },
+                    { text: "To project video presentations onto walls", isCorrect: false, rationale: "This describes multimedia projectors." }
+                ]
+            },
+            {
+                question: "What is the function of a network switch in a wired Local Area Network (LAN)?",
+                options: [
+                    { text: "To connect multiple devices together on the same network and direct incoming data packets specifically to their intended destination device", isCorrect: true, rationale: "Switches connect devices within a LAN and forward data directly to the specific target device using MAC addresses." },
+                    { text: "To convert analogue audio signals into digital binary code", isCorrect: false, rationale: "This describes an ADC." },
+                    { text: "To burn pits and lands onto optical Blu-ray discs", isCorrect: false, rationale: "This describes optical drives." },
+                    { text: "To measure ambient room air temperature", isCorrect: false, rationale: "This describes environmental sensors." }
+                ]
+            },
+            {
+                question: "What is a Network Interface Card (NIC)?",
+                options: [
+                    { text: "A hardware component (built into the motherboard or plugged in) that connects a computer to a network", isCorrect: true, rationale: "Every device on a network requires an NIC (either wired Ethernet or wireless Wi-Fi) to communicate." },
+                    { text: "A plastic payment card with a magnetic stripe", isCorrect: false, rationale: "This describes magnetic banking cards." },
+                    { text: "An optical scanner used for reading student exam bubbles", isCorrect: false, rationale: "This describes OMR." },
+                    { text: "A removable memory card used in digital cameras", isCorrect: false, rationale: "This describes SD memory cards." }
+                ]
+            },
+            {
+                question: "What is a Wireless Access Point (WAP)?",
+                options: [
+                    { text: "A networking hardware device that allows Wi-Fi compatible devices to connect to a wired network using radio waves", isCorrect: true, rationale: "A WAP bridges wireless devices to a fixed wired network infrastructure." },
+                    { text: "A physical cable used to connect monitors to graphics cards", isCorrect: false, rationale: "This describes HDMI or DisplayPort cables." },
+                    { text: "A hard disk drive enclosure connected via USB", isCorrect: false, rationale: "This describes portable storage." },
+                    { text: "An impact dot-matrix printer mechanism", isCorrect: false, rationale: "This is a printer." }
+                ]
+            },
+            {
+                question: "What is the difference between a LAN and a WAN?",
+                options: [
+                    { text: "A LAN covers a small local area (like a school), whereas a WAN covers a large geographical area (like multiple cities or countries)", isCorrect: true, rationale: "Scale is the primary difference: LANs are local and privately owned, while WANs span wide distances and often use third-party telecommunications." },
+                    { text: "A LAN uses wireless radio waves, while a WAN only uses copper cables", isCorrect: false, rationale: "Both LANs and WANs can use wired and wireless connections." },
+                    { text: "A LAN is slower than a dial-up modem, while a WAN is faster than fibre optic", isCorrect: false, rationale: "LANs typically offer much faster data transfer speeds than WANs." },
+                    { text: "There is no difference between them", isCorrect: false, rationale: "They describe completely different network scales." }
+                ]
+            },
+            {
+                question: "What is a MAC (Media Access Control) address?",
+                options: [
+                    { text: "A unique physical hardware identifier permanently assigned to a network interface card (NIC) during manufacturing", isCorrect: true, rationale: "A MAC address is a permanent hardware address burnt into the NIC, unchanging regardless of network location." },
+                    { text: "A temporary IP number assigned by a router when joining Wi-Fi", isCorrect: false, rationale: "Temporary network addresses are IP addresses, not MAC addresses." },
+                    { text: "The physical postal address of a computer manufacturer", isCorrect: false, rationale: "This is a corporate mailing address." },
+                    { text: "A password used to encrypt wireless network traffic", isCorrect: false, rationale: "This describes WPA/WPA2 security keys." }
+                ]
+            },
+            {
+                question: "What is an IP (Internet Protocol) address?",
+                options: [
+                    { text: "A logical numerical address assigned to a device connected to a computer network, which changes depending on the network it connects to", isCorrect: true, rationale: "An IP address identifies a device on a network and changes when moving between different networks (e.g., home vs. school Wi-Fi)." },
+                    { text: "A permanent hardware number burnt into the motherboard at the factory", isCorrect: false, rationale: "Permanent hardware addresses are MAC addresses." },
+                    { text: "The physical weight of a network cable in grams", isCorrect: false, rationale: "This measures mass." },
+                    { text: "A graphic design software suite for editing photos", isCorrect: false, rationale: "This is incorrect." }
+                ]
+            },
+            {
+                question: "What is a bridge in computer networking?",
+                options: [
+                    { text: "A device that connects two separate local area networks (LANs) together to form a single combined network", isCorrect: true, rationale: "A network bridge links two distinct LAN segments so they function as one network." },
+                    { text: "A physical wooden plank placed across a river", isCorrect: false, rationale: "This is civil engineering, not computer networking." },
+                    { text: "An optical disc burner drive", isCorrect: false, rationale: "This is optical storage hardware." },
+                    { text: "A speaker amplifier unit", isCorrect: false, rationale: "This is audio equipment." }
+                ]
+            },
+            {
+                question: "What is a server in a client-server network architecture?",
+                options: [
+                    { text: "A powerful computer that manages network resources, stores shared files, and provides services to client computers", isCorrect: true, rationale: "Servers handle centralized tasks such as hosting websites, emails, and database management for client workstations." },
+                    { text: "A waiter who delivers meals in a restaurant", isCorrect: false, rationale: "This is catering, not computer networking." },
+                    { text: "A handheld smartphone used for making phone calls", isCorrect: false, rationale: "This is a mobile handset." },
+                    { text: "A portable USB flash drive", isCorrect: false, rationale: "This is solid-state storage." }
+                ]
+            },
+            {
+                question: "What is a client computer in a network?",
+                options: [
+                    { text: "A workstation or user device that requests and receives resources, files, and services from a central server", isCorrect: true, rationale: "Client computers rely on network servers for shared data and processing services." },
+                    { text: "A corporate legal customer paying for software services", isCorrect: false, rationale: "This is commercial business terminology." },
+                    { text: "A central mainframe machine hosting all corporate files", isCorrect: false, rationale: "This describes a server." },
+                    { text: "A passive network cable spool", isCorrect: false, rationale: "This is transmission media." }
+                ]
+            },
+            {
+                question: "What is a packet in data transmission across a network?",
+                options: [
+                    { text: "A small formatted unit of data transmitted over a network, containing sender/receiver addresses and payload data", isCorrect: true, rationale: "Large files are broken down into smaller packets, transmitted independently across a network, and reassembled at the destination." },
+                    { text: "A physical mailing envelope sent via postal mail", isCorrect: false, rationale: "This is traditional postal mail." },
+                    { text: "A solid plastic container holding printer toner powder", isCorrect: false, rationale: "This is a toner cartridge." },
+                    { text: "A container holding optical CD discs", isCorrect: false, rationale: "This is a jewel case." }
+                ]
+            },
+            {
+                question: "What is bandwidth in computer networks?",
+                options: [
+                    { text: "The maximum rate of data transfer across a given network path, usually measured in Megabits per second (Mbps) or Gigabits per second (Gbps)", isCorrect: true, rationale: "Bandwidth measures the data-carrying capacity of a network connection over time." },
+                    { text: "The physical thickness of a fibre optic glass core", isCorrect: false, rationale: "This measures physical cable dimensions." },
+                    { text: "The wireless radio broadcast frequency range in Hertz", isCorrect: false, rationale: "Frequency measures electromagnetic waves, whereas bandwidth measures data transmission capacity." },
+                    { text: "The physical length of an Ethernet cable in meters", isCorrect: false, rationale: "This measures distance." }
+                ]
+            },
+            {
+                question: "What is attenuation in network data transmission?",
+                options: [
+                    { text: "The gradual loss of signal strength as data travels over long distances through transmission media", isCorrect: true, rationale: "Signals weaken over distance along copper or fibre cables, sometimes requiring repeaters or amplifiers to boost them." },
+                    { text: "The encryption of passwords using quantum cryptography", isCorrect: false, rationale: "This describes data security." },
+                    { text: "The compression of image files to save storage space", isCorrect: false, rationale: "This describes file compression." },
+                    { text: "The speed at which packets arrive at a destination", isCorrect: false, rationale: "This is latency." }
+                ]
+            },
+            {
+                question: "What is network latency?",
+                options: [
+                    { text: "The time delay experienced between a data packet being sent and it arriving at its destination", isCorrect: true, rationale: "Latency measures delay (lag) in milliseconds during network communication." },
+                    { text: "The total data transfer capacity of a fibre optic line", isCorrect: false, rationale: "This measures bandwidth." },
+                    { text: "The physical weight of network routing equipment", isCorrect: false, rationale: "This measures mass." },
+                    { text: "The storage capacity of a server hard drive", isCorrect: false, rationale: "This measures storage." }
+                ]
+            },
+            {
+                question: "What is a proxy server?",
+                options: [
+                    { text: "A server that acts as an intermediary between client computers and the internet, often used for caching web pages, filtering content, and enhancing security", isCorrect: true, rationale: "Proxy servers handle web requests on behalf of clients, improving speed via caching and blocking malicious sites." },
+                    { text: "A backup generator supplying emergency power during blackouts", isCorrect: false, rationale: "This describes a UPS (Uninterruptible Power Supply)." },
+                    { text: "A printer sharing device connected to USB ports", isCorrect: false, rationale: "This is a print server." },
+                    { text: "A wireless mouse adapter dongle", isCorrect: false, rationale: "This is a peripheral receiver." }
+                ]
+            },
+            {
+                question: "What is a firewall in network security?",
+                options: [
+                    { text: "A hardware or software security system that monitors and controls incoming and outgoing network traffic based on predetermined security rules", isCorrect: true, rationale: "Firewalls act as a barrier between trusted internal networks and untrusted external networks like the internet." },
+                    { text: "A physical concrete wall designed to prevent office fires", isCorrect: false, rationale: "This is architectural building construction." },
+                    { text: "An antivirus software that scans hard drives for local malware", isCorrect: false, rationale: "Antivirus protects files, while firewalls protect network traffic." },
+                    { text: "A cooling fan inside a server CPU chassis", isCorrect: false, rationale: "This is hardware cooling." }
+                ]
+            },
+            {
+                question: "Which of the following best summarizes the difference between a hub and a switch in a wired LAN?",
+                options: [
+                    { text: "A hub broadcasts incoming data packets to all connected ports indiscriminately, whereas a switch intelligently forwards packets only to the specific target device's port", isCorrect: true, rationale: "Hubs create network congestion by broadcasting data everywhere, while switches use MAC addresses to route packets efficiently." },
+                    { text: "A hub is a wireless router, while a switch is a fibre optic cable", isCorrect: false, rationale: "Both are wired LAN connection devices." },
+                    { text: "A hub stores backing storage files, while a switch displays monitor output", isCorrect: false, rationale: "This is incorrect." },
+                    { text: "There is no functional difference between a hub and a switch", isCorrect: false, rationale: "Switches are much smarter and more efficient than older hubs." }
+                ]
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let answered = false;
+
+        const questionCounter = document.getElementById("question-counter");
+        const scoreDisplay = document.getElementById("score-display");
+        const questionBox = document.getElementById("question-box");
+        const optionsContainer = document.getElementById("options-container");
+        const feedbackBox = document.getElementById("feedback-box");
+        const nextBtn = document.getElementById("next-btn");
+        const quizContainer = document.getElementById("quiz-container");
+        const resultsContainer = document.getElementById("results-container");
+        const finalScore = document.getElementById("final-score");
+
+        function loadQuestion() {
+            answered = false;
+            feedbackBox.classList.add("hidden");
+            nextBtn.classList.add("hidden");
+            
+            const q = questions[currentQuestionIndex];
+            questionCounter.textContent = `Question ${currentQuestionIndex + 1} of ${questions.length}`;
+            scoreDisplay.textContent = `Score: ${score}`;
+            questionBox.textContent = q.question;
+
+            // Shuffle options array randomly so correct answer is not always first
+            let shuffledOptions = [...q.options].sort(() => Math.random() - 0.5);
+
+            optionsContainer.innerHTML = "";
+            shuffledOptions.forEach((opt) => {
+                const btn = document.createElement("button");
+                btn.className = "option-btn";
+                btn.textContent = opt.text;
+                btn.onclick = () => selectOption(opt, shuffledOptions);
+                optionsContainer.appendChild(btn);
+            });
+        }
+
+        function selectOption(selectedOpt, shuffledOptions) {
+            if (answered) return;
+            answered = true;
+
+            const allOptionButtons = optionsContainer.children;
+
+            shuffledOptions.forEach((opt, idx) => {
+                allOptionButtons[idx].disabled = true;
+                if (opt.isCorrect) {
+                    allOptionButtons[idx].classList.add("correct");
+                } else if (opt === selectedOpt && !selectedOpt.isCorrect) {
+                    allOptionButtons[idx].classList.add("incorrect");
+                }
+            });
+
+            feedbackBox.classList.remove("hidden");
+            if (selectedOpt.isCorrect) {
+                score++;
+                scoreDisplay.textContent = `Score: ${score}`;
+                feedbackBox.className = "feedback-box correct-feedback";
+                feedbackBox.innerHTML = `<strong>Correct!</strong> ${selectedOpt.rationale}`;
+            } else {
+                feedbackBox.className = "feedback-box incorrect-feedback";
+                feedbackBox.innerHTML = `<strong>Incorrect.</strong> ${selectedOpt.rationale}`;
+            }
+
+            if (currentQuestionIndex < questions.length - 1) {
+                nextBtn.textContent = "Next Question";
+            } else {
+                nextBtn.textContent = "View Results";
+            }
+            nextBtn.classList.remove("hidden");
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < questions.length) {
+                loadQuestion();
+            } else {
+                quizContainer.classList.add("hidden");
+                resultsContainer.classList.remove("hidden");
+                finalScore.textContent = `You scored ${score} out of ${questions.length}`;
+            }
+        }
+
+        function restartQuiz() {
+            currentQuestionIndex = 0;
+            score = 0;
+            resultsContainer.classList.add("hidden");
+            quizContainer.classList.remove("hidden");
+            loadQuestion();
+        }
+
+        // Initialize quiz on load
+        loadQuestion();
+    </script>
+</body>
+</html>
